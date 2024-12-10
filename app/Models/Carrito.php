@@ -16,4 +16,10 @@ class Carrito extends Model
     	'cantidad',
         'fecha_agregado'	
     ];
-    public $timestamps = false;}
+    public $timestamps = false;
+
+    public function producto()
+    {
+        return $this->belongsTo(Productos::class, 'id_producto', 'id_producto');
+    }
+}

@@ -11,6 +11,7 @@ class Productos extends Model
     protected $table = 'producto';
     protected $primaryKey = 'id_producto';
     protected $fillable = [
+        'nombre',
         'descripcion',	
         'precio',	
         'imagen',	
@@ -18,4 +19,9 @@ class Productos extends Model
         'id_cateogria',	
         'id_productor'];
     public $timestamps = false;
+
+    public function carritos()
+    {
+        return $this->hasMany(Carrito::class, 'id_producto', 'id_producto');
+    }
 }

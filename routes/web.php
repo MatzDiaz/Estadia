@@ -52,3 +52,8 @@ Route::get('/usuarios', [UserController::class, 'indexUsuarios'])->name('usuario
 Route::get('/backups', [BackupRestoreController::class, 'index'])->name('backup.index');
 Route::post('/backups/generate', [BackupRestoreController::class, 'backupDatabase'])->name('backup.generate');
 Route::post('/backups/restore', [BackupRestoreController::class, 'restoreDatabase'])->name('backup.restore');
+
+//Rutas para el carrito
+Route::post('/carrito/{id}', [CarritoController::class, 'PutInCart'])->name('carrito.Agregar');
+Route::get('/MyCarrito', [CarritoController::class, 'ShowMyCart'])->name('carrito.Mostrar');
+Route::delete('/carritoEliminar/{id}', [CarritoController::class, 'DeleteOneProduc'])->name('carrito.quitar');

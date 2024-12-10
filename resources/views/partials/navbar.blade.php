@@ -45,7 +45,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('carrito') ? 'active' : '' }}" href="{{ route('carrito.index') }}"><h4><i class="bi bi-cart4"></i></h4></a>
+                        <a class="nav-link {{ request()->is('carrito') ? 'active' : '' }}" href="{{ route('carrito.Mostrar') }}"><h4><i class="bi bi-cart4"></i></h4></a>
                     </li>
                 @else
                     <li class="nav-item">

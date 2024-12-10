@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Carrito;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class CarritoController extends Controller
 {
@@ -21,6 +23,32 @@ class CarritoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    public function PutInCart(Request $request){
+        $carrito = new Carrito;
+        $carrito->id_usuario = auth()->user()->id;
+        $carrito->id_producto = $request->id;
+        $carrito->cantidad = $request->cantidad;
+        $carrito->fecha_agregado =Carbon::now()->toDateString();
+        $carrito->save();
+        return response()->json(['message' => $request->all()]);
+    }
+
+    public function ShowMyCart(){
+        $carrito = Carrito::with('producto')
+        ->where('id_usuario', auth()->user()->id)->get();
+        return view('ventas.carrito', compact('carrito'));
+    }
+
+    public function DeleteOneProduc(Request $request){
+        $carrito = Carrito::where('id_usuario', auth()->user()->id)
+        ->where('id_carrito', $request->id)->first();
+        $carrito->delete();
+        return response()->json(['message' => 'Producto eliminado']);
+    }
+
+    
+
     public function create()
     {
         //
