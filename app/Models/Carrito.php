@@ -14,7 +14,8 @@ class Carrito extends Model
 	    'id_usuario',
     	'id_producto',
     	'cantidad',
-        'fecha_agregado'	
+        'fecha_agregado',
+        'SubTotalPorducto'	
     ];
     public $timestamps = false;
 

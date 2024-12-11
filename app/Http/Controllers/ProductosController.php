@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Productos;
+use App\Models\User;
 use App\Models\Categorias;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,15 +15,27 @@ class ProductosController extends Controller
      */
     public function index()
     {
+        
         $categorias = Categorias::all();
-        $producto = Productos::all();
+        $producto = Productos::where('id_productor', auth()->user()->id)->get();
         return view('productos.productos', compact('producto','categorias'));
     }
 
     public function home()
     {
-        $productos = Productos::all();
-        return view('ventas.home', compact('productos'));
+        if(auth()->user()->rol == 'Consumidor'){
+            
+            $productos = Productos::all();
+            return view('ventas.home', compact('productos'));
+        }else{
+            if(auth()->user()->rol == 'Admin'){
+                $usuarios =  User::all();
+                return view('usuarios.productores', compact('usuarios'));
+            }
+        }
+        $producto = Productos::where('id_productor', auth()->user()->id)->get();
+        $categorias = Categorias::all();
+        return view('productos.productos', compact('producto','categorias'));
     }
 
     public function inventario()
@@ -46,15 +59,33 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         // Validar los datos de entrada
-        /*
+        
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric|min:0',
-            'id_categoria' => 'required|exists:categorias,id',
-            'id_productor' => 'required|exists:productores,id',
-            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validación para la imagen
-        ]);*/
+            'id_categoria' => 'required|exists:categorias,id_categoria',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'nombre.required' => 'El nombre del producto es obligatorio.',
+            'nombre.string' => 'El nombre del producto debe ser un texto válido.',
+            'nombre.max' => 'El nombre del producto no puede exceder los 255 caracteres.',
+            
+            'descripcion.required' => 'La descripción del producto es obligatoria.',
+            'descripcion.string' => 'La descripción debe ser un texto válido.',
+        
+            'precio.required' => 'El precio del producto es obligatorio.',
+            'precio.numeric' => 'El precio debe ser un número válido.',
+            'precio.min' => 'El precio debe ser mayor o igual a 0.',
+        
+            'id_categoria.required' => 'La categoría es obligatoria.',
+            'id_categoria.exists' => 'La categoría seleccionada no es válida.',
+        
+            'imagen.image' => 'El archivo subido debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe tener uno de los siguientes formatos: jpeg, png, jpg o gif.',
+            'imagen.max' => 'La imagen no debe superar los 2 MB de tamaño.',
+        ]);
+        
     
         // Crear una nueva instancia del modelo Producto
         $producto = new Productos;
@@ -62,7 +93,7 @@ class ProductosController extends Controller
         $producto->descripcion = $request->input('descripcion');
         $producto->precio = $request->input('precio');
         $producto->id_cateogria = $request->input('id_categoria');
-        $producto->id_productor = $request->input('id_productor');
+        $producto->id_productor = auth()->user()->id;
     
         // Procesar la imagen si se proporciona
         if ($request->hasFile('imagen')) {

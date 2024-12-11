@@ -27,6 +27,15 @@
         </button>
         <br><br>
             <div class="row">
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @foreach($producto as $prod)
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm" style="width: 100%;">
@@ -75,6 +84,15 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if ($errors->any())
+                    // Si hay errores, muestra el modal al cargar la página
+                    var myModal = new bootstrap.Modal(document.getElementById('create'));
+                    myModal.show();
+                @endif
+            });
+        </script>
     </body>
 </html>
 

@@ -43,14 +43,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //'password' => Hash::make($data['password'])
         $usuarios = new User;
         $usuarios->name = $request->input('nombre');
         $usuarios->apellido = $request->input('apellido');
         $usuarios->email = $request->input('email');
         $usuarios->telefono = $request->input('telefono');
         $usuarios->direccion = $request->input('direccion');
-        $usuarios->password = $request->input('password');
+        $usuarios->password = bcrypt($request->input('password'));
         $usuarios->sexo = $request->input('sexo');
         $usuarios->rol = $request->input('rol');        
         $usuarios->save();

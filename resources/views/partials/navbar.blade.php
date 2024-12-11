@@ -12,30 +12,41 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('usuarios.productores') }}">Productores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('contacto') ? 'active' : '' }}" href="{{ route('usuarios.usuarios') }}">Usuarios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('categorias') ? 'active' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="{{ route('blog.index') }}">Blog</a>
-                </li>
-                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('entradas') ? 'active' : '' }}" href="{{ route('entradas.index') }}">Inventario</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('productos.index') }}">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('base') ? 'active' : '' }}" href="{{ route('base.index') }}">Base de datos</a>
-                </li>
+                @if (auth()->user() && auth()->user()->rol=='Admin')
+                    
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('usuarios.productores') }}">Productores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('contacto') ? 'active' : '' }}" href="{{ route('usuarios.usuarios') }}">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('categorias') ? 'active' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('blog') ? 'active' : '' }}" href="{{ route('blog.index') }}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('entradas') ? 'active' : '' }}" href="{{ route('entradas.index') }}">Inventario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('productos.index') }}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('base') ? 'active' : '' }}" href="{{ route('base.index') }}">Base de datos</a>
+                    </li>
+                @endif
+                @if (auth()->user() && auth()->user()->rol=='Consumidor')
+                    @include('partials.navConsu')
+                @endif
+
+                @if (auth()->user() && auth()->user()->rol=='Productor')
+                    @include('partials.navProductor')
+                @endif
+
                 <!-- Enlace para iniciar o cerrar sesión -->
                 @auth
                     <li class="nav-item">

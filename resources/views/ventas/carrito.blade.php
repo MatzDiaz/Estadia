@@ -27,33 +27,47 @@
             <div class="row">
                 <h2>Mi carrito</h2>
                 <h3>Lista de productos</h3>
-                @foreach($carrito as $productos)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm" style="width: 100%;">
-                            <!-- Imagen de la publicación -->
-                            
-                            <div class="card-body">
-                                <!-- Título y precio del producto -->
-                                <h5 class="card-title">{{ $productos->producto->nombre }} <br> 
-                                    <small class="text-muted">Precio unitario ${{ $productos->producto->precio }}</small>
-                                    <br> 
-                                    <small class="text-muted">Cantidad comprada {{ $productos->cantidad }} Unidades</small>
-
-                                </h5>
-                                <!-- Botón para agregar al carrito -->
-                                <button onclick="Eliminar({{ $productos->id_carrito }})" class="btn btn-success" >
-
-                                    <i class="bi bi-cart-plus"></i> Agregar al carrito
-                                </button>
-
+                @if(count($carrito) == 0)
+                    <h4>No hay productos en el carrito</h4>
+                @endif
+                <div class="row">
+                    @foreach($carrito as $productos)
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm" style="width: 100%;">                                
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $productos->producto->nombre }} <br> 
+                                        <small class="text-muted
+                                        ">Precio unitario ${{ $productos->producto->precio }}</small>
+                                        <br>
+                                        <small class="text-muted
+                                        ">Cantidad comprada {{ $productos->cantidad }} Unidades</small>
+                                        <br>
+                                        <small class="text-muted
+                                        ">Presio en cojunto ${{ $productos->SubTotalPorducto }} </small>
+                                    </h5>
+                                    <button onclick="Eliminar({{ $productos->id_carrito }})" class="btn btn-danger" >
+                                        <i class="bi bi-cart
+                                        -plus"></i> Eliminar
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-            <div class="row">
+            <div class="row" >
                 <h2>Precio total</h2>
                 
+                <h3>Total: $<span id="total">{{$total}}</span></h3>
+            </div>
+            <div class="row" >
+            <div class="card shadow-sm" style="width: 100%;">                                
+                    <div class="card-body">        
+                        <a href="{{ route('carrito.Mostrar') }}" class="btn btn-primary">Seguir comprando</a>
+                        <a href="" class="btn btn-success">Comprar</a>
+                                    
+                    </div>
+                </div>
             </div>
         </div>
         <script >
@@ -78,6 +92,9 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 2500);
                             })
                             .catch(function (error) {
                                 console.log(error);
@@ -98,5 +115,16 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script >
+
+            function total(carrito){
+                let total = 0;
+                carrito.forEach(element => {
+                    total += element.producto.precio * element.cantidad;
+                });
+                console.log(total);
+                document.getElementById('total').innerText = total;
+            }
+        </script>
     </body>
 </html>

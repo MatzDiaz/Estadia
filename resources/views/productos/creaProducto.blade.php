@@ -13,19 +13,24 @@
         <div class="mb-3">
             <!-- Nombre del Producto -->
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese el nombre del producto" required>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese el nombre del producto" value="{{ old('nombre') }}" >
+            @if ($errors->has('nombre'))
+                <spam class="text-danger"> {{ $errors->first('nombre') }} </spam>
+            @endif
+
         </div>
         
         <div class="mb-3">
             <!-- Descripción -->
             <label for="descripcion" class="form-label">Descripción</label>
-            <textarea class="form-control" name="descripcion" id="descripcion" rows="3" placeholder="Ingrese una descripción del producto" required></textarea>
+            <textarea class="form-control" name="descripcion" id="descripcion" rows="3" placeholder="Ingrese una descripción del producto" required
+            >{{ old('descripcion') }}</textarea>
         </div>
         
         <div class="mb-3">
             <!-- Precio -->
             <label for="precio" class="form-label">Precio</label>
-            <input type="text" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio del producto" step="0.01" min="0" required>
+            <input type="text" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio del producto" step="0.01" min="0" required  value="{{ old('precio') }}">
         </div>
         
         <div class="mb-3">
@@ -37,15 +42,16 @@
         <div class="mb-3">
             <!-- Categoría -->
             <label for="id_categoria" class="form-label">Categoría</label>
-            <select class="form-control" name="id_categoria" id="id_categoria" required>
+            <select class="form-control" name="id_categoria" id="id_categoria">
                 <option value="">Seleccione una categoría</option>
                 @foreach($categorias as $categoria)
-                    <option value="{{ $categoria->id_categoria}}">{{ $categoria->nombre_cat}}</option>
+                    <option value="{{ $categoria->id_categoria }}" {{ old('id_categoria') == $categoria->id_categoria ? 'selected' : '' }}>
+                        {{ $categoria->nombre_cat }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
-        <input type="hidden" name="id_productor" value="{{ auth()->user()->id }}">
 
       </div>
       <div class="modal-footer">

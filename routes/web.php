@@ -57,3 +57,7 @@ Route::post('/backups/restore', [BackupRestoreController::class, 'restoreDatabas
 Route::post('/carrito/{id}', [CarritoController::class, 'PutInCart'])->name('carrito.Agregar');
 Route::get('/MyCarrito', [CarritoController::class, 'ShowMyCart'])->name('carrito.Mostrar');
 Route::delete('/carritoEliminar/{id}', [CarritoController::class, 'DeleteOneProduc'])->name('carrito.quitar');
+
+//para realizar la venta
+
+

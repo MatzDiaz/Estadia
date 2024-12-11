@@ -19,6 +19,11 @@
                 @foreach($productos as $prod)
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm" style="width: 100%;">
+                            @if($prod->cantidad == 0)
+                                <div class="alert alert-danger" role="alert">
+                                    Producto agotado
+                                </div>
+                            @endif
                             <!-- Imagen de la publicación -->
                             @if($prod->imagen)
                                 <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid">
@@ -35,10 +40,11 @@
                                 </p>
 
                                 <!-- Botón para agregar al carrito -->
-                                <button onclick="obtenerId({{ $prod->id_producto }},{{$prod->cantidad}})" class="btn btn-success" >
-
-                                    <i class="bi bi-cart-plus"></i> Agregar al carrito
-                                </button>
+                                 @if($prod->cantidad > 0)
+                                    <button onclick="obtenerId({{ $prod->id_producto }},{{$prod->cantidad}})" class="btn btn-success" >
+                                        <i class="bi bi-cart-plus"></i> Agregar al carrito
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -78,6 +84,11 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                            
+                            
                         })
                         .catch(function (error) {
                             console.log(error);
