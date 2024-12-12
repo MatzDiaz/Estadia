@@ -89,5 +89,14 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if ($errors->any())
+                    // Si hay errores, muestra el modal al cargar la página
+                    var myModal = new bootstrap.Modal(document.getElementById('create'));
+                    myModal.show();
+                @endif
+            });
+        </script>
     </body>
 </html>

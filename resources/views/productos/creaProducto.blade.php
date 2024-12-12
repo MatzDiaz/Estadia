@@ -25,18 +25,27 @@
             <label for="descripcion" class="form-label">Descripción</label>
             <textarea class="form-control" name="descripcion" id="descripcion" rows="3" placeholder="Ingrese una descripción del producto" required
             >{{ old('descripcion') }}</textarea>
+            @if ($errors->has('descripcion'))
+                <spam class="text-danger"> {{ $errors->first('descripcion') }} </spam>
+            @endif
         </div>
         
         <div class="mb-3">
             <!-- Precio -->
             <label for="precio" class="form-label">Precio</label>
             <input type="text" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio del producto" step="0.01" min="0" required  value="{{ old('precio') }}">
+            @if ($errors->has('precio'))
+                <spam class="text-danger"> {{ $errors->first('precio') }} </spam>
+            @endif
         </div>
         
         <div class="mb-3">
             <!-- Imagen -->
             <label for="imagen" class="form-label">Imagen</label>
             <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*" required>
+            @if ($errors->has('imagen'))
+                <spam class="text-danger"> {{ $errors->first('imagen') }} </spam>
+            @endif
         </div>
         
         <div class="mb-3">
@@ -50,6 +59,9 @@
                     </option>
                 @endforeach
             </select>
+            @if ($errors->has('id_categoria'))
+                <spam class="text-danger"> {{ $errors->first('id_categoria') }} </spam>
+            @endif
         </div>
 
 

@@ -43,6 +43,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+            'direccion' => 'required',
+            'password' => 'required',
+            'sexo' => 'required',
+            'rol' => 'required',
+        ]);
         //'password' => Hash::make($data['password'])
         $usuarios = new User;
         $usuarios->name = $request->input('nombre');
@@ -79,6 +89,16 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'email' => 'required',
+            'telefono' => 'required',
+            'direccion' => 'required',
+            'password' => 'required',
+            'sexo' => 'required',
+            'rol' => 'required',
+        ]);
         $usuarios = User::find($id);
         $usuarios->name = $request->input('nombre');
         $usuarios->apellido = $request->input('apellido');

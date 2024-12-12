@@ -30,6 +30,10 @@ class CategoriasController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+        ]);
         $categorias = new categorias;
         $categorias->nombre_cat = $request->input('nombre');
         $categorias->descripcion = $request->input('descripcion');
@@ -58,6 +62,10 @@ class CategoriasController extends Controller
      */
     public function update(Request $request, $id_categoria)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'descripcion' => 'required',
+        ]);
         $categorias = categorias::find($id_categoria);
         $categorias->nombre_cat = $request->input('nombre');
         $categorias->descripcion = $request->input('descripcion');

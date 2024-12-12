@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Carrito;
 use App\Models\Productos;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Correostock;
 
 
 class CarritoController extends Controller
@@ -40,6 +43,13 @@ class CarritoController extends Controller
         $carrito->SubTotalPorducto = $producto->precio * $request->cantidad;
 
 
+        if($producto->cantidad <= 5){
+            $mensaje = "El producto ".$producto->nombre." esta por agotarse, solo quedan ".$producto->cantidad." unidades";
+            $user = User::where('id', '=', $producto->id_productor)->first();
+            
+            Mail::to($user->email)->send(new Correostock($mensaje));
+
+        }
         $carrito->save();
         return response()->json(['message' => $request->all()]);
     }
@@ -55,8 +65,10 @@ class CarritoController extends Controller
     }
 
     public function DeleteOneProduc(Request $request){
+
         $carrito = Carrito::where('id_usuario', auth()->user()->id)
         ->where('id_carrito', $request->id)->first();
+        
         $producto = Productos::find($carrito->id_producto);
         $producto->cantidad = $producto->cantidad + $carrito->cantidad;
         $producto->save();

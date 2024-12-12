@@ -68,6 +68,15 @@
         </div>
         <div class="col-md-2"></div>
     </div>
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                @if ($errors->any())
+                    // Si hay errores, muestra el modal al cargar la página
+                    var myModal = new bootstrap.Modal(document.getElementById('create'));
+                    myModal.show();
+                @endif
+            });
+    </script>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 

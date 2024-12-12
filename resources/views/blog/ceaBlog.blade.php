@@ -18,17 +18,26 @@
 
             <div class="form-group mb-3">
                 <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingresa el título" required>
+                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingresa el título" >
+                @if ($errors->has('titulo'))
+                    <spam class="text-danger"> {{ $errors->first('titulo') }} </spam>
+                @endif
             </div>
 
             <div class="form-group mb-3">
                 <label for="descripcion">Descripción</label>
                 <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Ingresa la descripción" required></textarea>
+                @if ($errors->has('descripcion'))
+                    <spam class="text-danger"> {{ $errors->first('descripcion') }} </spam>
+                @endif
             </div>
 
             <div class="form-group mb-3">
                 <label for="multimedia">Archivo Multimedia</label>
                 <input type="file" class="form-control" id="imagen" name="imagen">
+                @if ($errors->has('imagen'))
+                    <spam class="text-danger"> {{ $errors->first('imagen') }} </spam>
+                @endif
             </div>
       </div>
       <div class="modal-footer">

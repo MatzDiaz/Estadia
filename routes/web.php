@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
@@ -58,6 +60,7 @@ Route::post('/carrito/{id}', [CarritoController::class, 'PutInCart'])->name('car
 Route::get('/MyCarrito', [CarritoController::class, 'ShowMyCart'])->name('carrito.Mostrar');
 Route::delete('/carritoEliminar/{id}', [CarritoController::class, 'DeleteOneProduc'])->name('carrito.quitar');
 
-//para realizar la venta
+//para recuperar contraseña
 
 
+Auth::routes();

@@ -130,6 +130,13 @@ class ProductosController extends Controller
      */
         public function update(Request $request, $id_producto)
     {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric|min:0',
+            'id_categoria' => 'required|exists:categorias,id_categoria',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
     // Buscar el producto por ID
         $producto = Productos::find($id_producto);
 
@@ -142,7 +149,7 @@ class ProductosController extends Controller
         $producto->nombre = $request->input('nombre');
         $producto->descripcion = $request->input('descripcion');
         $producto->precio = $request->input('precio');
-        $producto->id_categoria = $request->input('id_categoria');
+        $producto->id_cateogria = $request->input('id_categoria');
 
         // Si hay una nueva imagen, procesarla
         if ($request->hasFile('imagen')) {

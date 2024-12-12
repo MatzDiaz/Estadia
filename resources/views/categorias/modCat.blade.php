@@ -14,10 +14,16 @@
         <div class="mb-3">
             <label for="" class="form-label">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre" required value="{{$categoria->nombre_cat}}"/>
+            @if($errors->has('nombre'))
+                <span class="text-danger">{{$errors->first('nombre')}}</span>
+            @endif
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Descripción</label>
             <input type="text" class="form-control" name="descripcion" id="descripcion" required value="{{$categoria->descripcion}}"/>
+            @if($errors->has('descripcion'))
+                <span class="text-danger">{{$errors->first('descripcion')}}</span>
+            @endif
         </div>
       </div>
       <div class="modal-footer">

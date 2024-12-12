@@ -15,18 +15,27 @@
             <!-- Nombre del Producto -->
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre" value="{{ $prod->nombre }}" required>
+            @if ($errors->has('nombre'))
+              <spam class="text-danger"> {{ $errors->first('nombre') }} </spam>
+            @endif
           </div>
           
           <div class="mb-3">
             <!-- Descripción -->
             <label for="descripcion" class="form-label">Descripción</label>
             <textarea class="form-control" name="descripcion" id="descripcion" rows="3" required>{{ $prod->descripcion }}</textarea>
+            @if ($errors->has('descripcion'))
+              <spam class="text-danger"> {{ $errors->first('descripcion') }} </spam>
+            @endif
           </div>
           
           <div class="mb-3">
             <!-- Precio -->
             <label for="precio" class="form-label">Precio</label>
             <input type="number" class="form-control" name="precio" id="precio" value="{{ $prod->precio }}" step="0.01" min="0" required>
+            @if ($errors->has('precio'))
+              <spam class="text-danger"> {{ $errors->first('precio') }} </spam>
+            @endif
           </div>
           
           <div class="mb-3">
@@ -34,6 +43,9 @@
             <label for="imagen" class="form-label">Imagen</label>
             <input type="file" class="form-control" name="imagen" id="imagen" accept="image/*">
             <small class="form-text text-muted">Deje este campo vacío si no desea cambiar la imagen.</small>
+            @if ($errors->has('imagen'))
+              <spam class="text-danger"> {{ $errors->first('imagen') }} </spam>
+            @endif
           </div>
           
           <div class="mb-3">
@@ -46,6 +58,9 @@
                 </option>
               @endforeach
             </select>
+            @if ($errors->has('id_categoria'))
+              <spam class="text-danger"> {{ $errors->first('id_categoria') }} </spam> 
+            @endif
           </div>
         </div>
         <div class="modal-footer">
