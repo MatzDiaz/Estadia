@@ -15,8 +15,8 @@
     <style>
         .chart-container {
             width: 100%;
-            max-width: 600px; /* Limita el tamaño máximo de las gráficas */
-            margin: auto; /* Centra las gráficas */
+            max-width: 500px; /* Ajusta el tamaño máximo */
+            margin: auto;
         }
         canvas {
             padding: 10px;
@@ -27,13 +27,16 @@
 @include('partials.navbar')
 
 <div class="container my-5">
-    <div class="row">
-        <div class="col-md-6 mb-4 chart-container">
-            <h2 class="text-center">Proveedores por Género</h2>
+    <div class="row justify-content-center">
+        <!-- Gráfica de Género -->
+        <div class="col-md-6 chart-container text-center">
+            <h2>Proveedores por Género</h2>
             <canvas id="graficaGenero"></canvas>
         </div>
-        <div class="col-md-6 mb-4 chart-container">
-            <h2 class="text-center">Proveedores por Dirección</h2>
+        
+        <!-- Gráfica de Dirección -->
+        <div class="col-md-6 chart-container text-center">
+            <h2>Proveedores por Estado</h2>
             <canvas id="graficaDireccion"></canvas>
         </div>
     </div>
