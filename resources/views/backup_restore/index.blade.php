@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,31 +21,22 @@
     @endif
 
     <h2>Generar respaldo</h2>
-    <form action="{{ route('backup.generate') }}" method="POST">
+    <form action="{{ route('backup_restore.generate') }}" method="POST">
         @csrf
         <button type="submit" class="btn btn-primary">Generar respaldo</button>
     </form>
 
     <h2 class="mt-4">Restaurar respaldo</h2>
-    <form action="{{ route('backup.restore') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backup_restore.restore') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <input type="file" name="backup_file" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-success">Restaurar</button>
     </form>
-
-    <h2 class="mt-4">Respaldos disponibles</h2>
-    <ul class="list-group">
-        @forelse($backups as $backup)
-            <li class="list-group-item">
-                {{ $backup->path() }}
-                <span class="text-muted">({{ $backup->size() }} bytes)</span>
-            </li>
-        @empty
-            <li class="list-group-item">No hay respaldos disponibles.</li>
-        @endforelse
-    </ul>
+<!--
+   
+-->
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>

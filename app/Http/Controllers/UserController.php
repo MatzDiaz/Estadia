@@ -93,11 +93,7 @@ class UserController extends Controller
             'nombre' => 'required',
             'apellido' => 'required',
             'email' => 'required',
-            'telefono' => 'required',
-            'direccion' => 'required',
-            'password' => 'required',
             'sexo' => 'required',
-            'rol' => 'required',
         ]);
         $usuarios = User::find($id);
         $usuarios->name = $request->input('nombre');
@@ -119,5 +115,25 @@ class UserController extends Controller
         $usuarios = User::find($id);
         $usuarios->delete();
         return redirect()->back();
+    }
+
+    public function graficas()
+    {
+        // Contar proveedores por género
+        $proveedoresPorGenero = User::where('rol', 'productor')
+            ->selectRaw('sexo, COUNT(*) as total')
+            ->groupBy('sexo')
+            ->pluck('total', 'sexo');
+
+        // Contar proveedores por dirección
+        $proveedoresPorDireccion = User::where('rol', 'productor')
+            ->selectRaw('direccion, COUNT(*) as total')
+            ->groupBy('direccion')
+            ->pluck('total', 'direccion');
+
+        return view('usuarios.graficas', [
+            'proveedoresPorGenero' => $proveedoresPorGenero,
+            'proveedoresPorDireccion' => $proveedoresPorDireccion,
+        ]);
     }
 }

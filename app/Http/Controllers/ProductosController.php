@@ -44,6 +44,11 @@ class ProductosController extends Controller
         return view('productos.inventario', compact('producto'));
     }
     
+    public function welcome()
+    {
+        $productos =  Productos::all();
+        return view('welcome', compact('productos'));
+    }
 
     /**
      * Show the form for creating a new resource.

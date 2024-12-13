@@ -44,13 +44,36 @@
         </div>
     </nav>
     <!--Aqui productos-->
-    <div class="container d-flex align-items-center justify-content-center min-vh-100">
-        <div class="text-center">
-            <h1 class="display-4">Bienvenido a Laravel</h1>
-            <p class="lead">Esta es una aplicación construida con Laravel.</p>
-        </div>
-    </div>
+    <div class="container mt-5">
+            <div class="row">
+                @foreach($productos as $prod)
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm" style="width: 100%;">
+                            @if($prod->cantidad == 0)
+                                <div class="alert alert-danger" role="alert">
+                                    Producto agotado
+                                </div>
+                            @endif
+                            <!-- Imagen de la publicación -->
+                            @if($prod->imagen)
+                                <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid">
+                            @endif
+                            <div class="card-body">
+                                <!-- Título y precio del producto -->
+                                <h5 class="card-title">{{ $prod->nombre }} <br> 
+                                    <small class="text-muted">$ {{ $prod->precio }}</small>
+                                </h5>
 
+                                <!-- Descripción del producto -->
+                                <p class="card-text">
+                                    {{ Str::limit($prod->descripcion, 100) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGzWBbqEnK2HIjq81HsZLxPmlm9IYfRvH+8abtTEK21zO" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0ey+2Bjc8C4GpC5KCk67h1rE/j5SRK5RjDNFzBd1AIF5IukH/x68k34/" crossorigin="anonymous"></script>
