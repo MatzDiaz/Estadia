@@ -28,9 +28,8 @@ Route::get('/verify', function () {
 })->name('verify');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductosController::class, 'welcome']);
+
 
 Route::get('/check-session', function () {
     return response()->json(['expired' => auth()->guest()]);
@@ -45,6 +44,7 @@ Route::resource('productos', ProductosController::class);
 Route::resource('categorias', CategoriasController::class);
 Route::resource('blog', BlogController::class);
 Route::resource('usuarios', UserController::class);
+Route::get('/graficas', [UserController::class, 'graficas'])->name('usuarios.graficas');
 Route::resource('entradas', EntradasController::class);
 Route::resource('salidas', SalidasController::class);
 Route::resource('carrito', CarritoController::class);
