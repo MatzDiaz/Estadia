@@ -13,6 +13,9 @@ class Detalle_venta extends Model
     protected $fillable = [
         'id_venta',
         'cantidad',
+        'id_producto',
+        'precio_unitario',
         'total'
     ];
+    public $timestamps = false;
 }

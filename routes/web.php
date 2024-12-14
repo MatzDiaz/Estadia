@@ -11,6 +11,7 @@ use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\SalidasController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\BackupRestoreController;
+use App\Http\Controllers\VentasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +39,7 @@ Route::get('/check-session', function () {
 
 Auth::routes();
 
-Route::get('/home', [ProductosController::class, 'home'])->name('home');
+Route::get('/home', [ProductosController::class, 'home'])->name('home')->middleware('auth');
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('productos', ProductosController::class);
 Route::resource('categorias', CategoriasController::class);
@@ -63,4 +64,19 @@ Route::delete('/carritoEliminar/{id}', [CarritoController::class, 'DeleteOneProd
 //para recuperar contraseña
 
 
+
 Auth::routes();
+
+
+//para ver grafica:
+Route::get('/graficas', [BackupRestoreController::class, 'graficas'])->name('graficas.ver');
+
+//para la compra/venta
+Route::get('/ventas', [VentasController::class, 'index'])->name('ventas.index');
+Route::post('/ventas', [VentasController::class, 'RealizarVenta'])->name('ventas.RealizarVenta');
+
+//para actualizar graficas:
+Route::post('/graficasPorFecha', [BackupRestoreController::class, 'filtro'])->name('graficas.filtro');
+
+//reporte pdf de ventas
+Route::get('/reporteVentas', [BackupRestoreController::class, 'reporteVentas'])->name('ventas.reporteVentas');

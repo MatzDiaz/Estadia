@@ -16,6 +16,11 @@
         @include('partials.navbar') <!-- Incluye la barra de navegación -->
         <div class="container mt-5">
             <div class="row">
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 @foreach($productos as $prod)
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm" style="width: 100%;">

@@ -13,7 +13,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 @if (auth()->user() && auth()->user()->rol=='Admin')
-                    
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('graficas.ver') ? 'active' : '' }}" href="{{ route('graficas.ver') }}">Dashboard</a>
+                    </li>    
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a>
                     </li>

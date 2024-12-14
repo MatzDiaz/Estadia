@@ -25,6 +25,7 @@
         <!-- Bootstrap JavaScript Libraries -->
         <div class="container mt-5">
             <div class="row">
+                
                 <h2>Mi carrito</h2>
                 <h3>Lista de productos</h3>
                 @if(count($carrito) == 0)
@@ -64,7 +65,7 @@
             <div class="card shadow-sm" style="width: 100%;">                                
                     <div class="card-body">        
                         <a href="{{ route('carrito.Mostrar') }}" class="btn btn-primary">Seguir comprando</a>
-                        <a href="" class="btn btn-success">Comprar</a>
+                        <a href="{{ route('ventas.index') }}" class="btn btn-success">Comprar</a>
                                     
                     </div>
                 </div>
