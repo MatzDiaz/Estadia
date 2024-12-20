@@ -29,6 +29,27 @@
                 <br><br>
                 <h3>Gestion de usuarios</h3>
                 <br>
+                <!-- Success Message -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>¡Éxito!</strong> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <!-- Error Messages -->
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>¡Error!</strong> Por favor corrige los errores antes de continuar.
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                 <i class="bi bi-plus-lg"></i>Nuevo
                 </button>

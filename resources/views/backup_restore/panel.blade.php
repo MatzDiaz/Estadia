@@ -67,22 +67,16 @@
 
         <!-- Gráficas -->
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h2 class="text-center">Ventas Mensuales</h2>
                 <div class="chart-container">
                     <canvas id="ventasChart"></canvas>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h2 class="text-center">Productos Más Vendidos</h2>
                 <div class="chart-container">
                     <canvas id="productosChart"></canvas>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h2 class="text-center">Proveedores por genero</h2>
-                <div class="chart-container">
-                    <canvas id="generoChart"></canvas>
                 </div>
             </div>
         </div>
@@ -128,8 +122,70 @@
                 </tbody>
             </table>
         </div>
-        {}
+    <!---->
+<!-- Botón de Acción -->
+<h2 class="mt-5">Reporte de Proveedores y Compras</h2>
+        <!-- Proveedores Más Vendidos -->
+                <!-- Gráficas -->
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-center">Proveedores por Direccion</h2>
+                <div class="chart-center">
+                    <canvas id="graficaDireccion"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Proveedores por genero</h2>
+                <div class="chart-container">
+                    <canvas id="generoChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="table-container">
+            <h3 class="mt-5">Proveedores Más Vendidos</h3>
+            <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Proveedor</th>
+                        <th>Total Vendido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($proveedores as $proveedor)
+                        <tr>
+                            <td>{{ $proveedor->productor_nombre }}</td>
+                            <td>{{ $proveedor->total_vendido }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+        </div>
 
+        <!-- Compras por Cliente -->
+        <div class="table-container" style="margin-top: 40px;">
+            <h3 class="mt-5">Compras por Cliente</h3>
+            <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cliente frecuentas</th>
+                        <th>Número de Compras</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($comprasPorCliente as $cliente)
+                        <tr>
+                            <td>{{ $cliente->name }}</td>
+                            <td>{{ $cliente->numeroCompras }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     </div>
     <script>
         
@@ -249,6 +305,67 @@
         });
     </script>
 
+<script>
+    // Datos para la gráfica de Dirección
+    const proveedoresPorDireccion = @json($proveedoresPorDireccion);
+
+    // Calcular el total de proveedores para obtener los porcentajes
+    const totalProveedores = Object.values(proveedoresPorDireccion).reduce((a, b) => a + b, 0);
+    const porcentajesDireccion = Object.values(proveedoresPorDireccion).map(value => ((value / totalProveedores) * 100).toFixed(2));
+
+    // Datos de la gráfica de Dirección
+    const dataDireccion = {
+        labels: Object.keys(proveedoresPorDireccion), // Direcciones
+        datasets: [{
+            label: 'Proveedores por Dirección', // Título de la gráfica
+            data: Object.values(proveedoresPorDireccion), // Total de proveedores por dirección
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)', 
+                'rgba(54, 162, 235, 0.2)', 
+                'rgba(255, 206, 86, 0.2)', 
+                'rgba(75, 192, 192, 0.2)', 
+                'rgba(153, 102, 255, 0.2)', 
+                'rgba(255, 159, 64, 0.2)'
+            ], // Colores de las secciones
+            borderColor: [
+                'rgba(255, 99, 132, 1)', 
+                'rgba(54, 162, 235, 1)', 
+                'rgba(255, 206, 86, 1)', 
+                'rgba(75, 192, 192, 1)', 
+                'rgba(153, 102, 255, 1)', 
+                'rgba(255, 159, 64, 1)'
+            ], // Bordes de las secciones
+            borderWidth: 1 // Ancho del borde
+        }]
+    };
+
+    // Configuración y renderización de la gráfica de Dirección
+    new Chart(document.getElementById('graficaDireccion'), {
+        type: 'pie', // Tipo de gráfica (pastel)
+        data: dataDireccion, // Datos que alimentan la gráfica
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Mantener el aspecto de la gráfica
+            plugins: {
+                legend: {
+                    position: 'top', // Posición de la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const label = dataDireccion.labels[tooltipItem.dataIndex]; // Dirección
+                            const value = dataDireccion.datasets[0].data[tooltipItem.dataIndex]; // Total de proveedores
+                            const percentage = porcentajesDireccion[tooltipItem.dataIndex]; // Porcentaje
+                            return `${label}: ${value} proveedores (${percentage}%)`; // Etiqueta con valor y porcentaje
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
     <script>
         function filtro(){
             var fecha_inicio = document.getElementById('fecha_inicio').value;
@@ -271,9 +388,6 @@
             });
             
         }
-
-
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>

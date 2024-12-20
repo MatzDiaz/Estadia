@@ -11,6 +11,7 @@ use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\SalidasController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\BackupRestoreController;
+use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\VentasController;
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::get('/verify', function () {
 })->name('verify');
 
 
-Route::get('/', [ProductosController::class, 'welcome']);
+Route::get('/', [ProductosController::class, 'welcome'])->name('welcome');
 
 
 Route::get('/check-session', function () {
@@ -52,9 +53,9 @@ Route::resource('base', BackupRestoreController::class);
 Route::get('/productores', [UserController::class, 'indexProductores'])->name('usuarios.productores');
 Route::get('/usuarios', [UserController::class, 'indexUsuarios'])->name('usuarios.usuarios');
 
-Route::get('/backups', [BackupRestoreController::class, 'index'])->name('backup.index');
-Route::post('/backups/generate', [BackupRestoreController::class, 'backupDatabase'])->name('backup.generate');
-Route::post('/backups/restore', [BackupRestoreController::class, 'restoreDatabase'])->name('backup.restore');
+Route::get('/backups', [DatabaseController::class, 'index'])->name('backup.index');
+Route::post('/backups/generate', [DatabaseController::class, 'backupDatabase'])->name('backup.generate');
+Route::post('/backups/restore', [DatabaseController::class, 'restoreDatabase'])->name('backup.restore');
 
 //Rutas para el carrito
 Route::post('/carrito/{id}', [CarritoController::class, 'PutInCart'])->name('carrito.Agregar');

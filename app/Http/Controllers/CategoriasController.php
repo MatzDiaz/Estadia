@@ -38,7 +38,7 @@ class CategoriasController extends Controller
         $categorias->nombre_cat = $request->input('nombre');
         $categorias->descripcion = $request->input('descripcion');
         $categorias->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Categoría creada con éxito.');
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoriasController extends Controller
         $categorias->nombre_cat = $request->input('nombre');
         $categorias->descripcion = $request->input('descripcion');
         $categorias->update();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Categoría actualizada con éxito.');
     }
 
     /**
@@ -81,6 +81,6 @@ class CategoriasController extends Controller
         //
         $categorias = categorias::find($id_categoria);
         $categorias->delete();
-        return redirect()->back();
+        return redirect()->back()->with('error', 'Categoría eliminada con éxito.');
     }
 }

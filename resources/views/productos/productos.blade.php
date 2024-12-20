@@ -22,6 +22,18 @@
     <body>
         @include('partials.navbar') <!-- Incluye la barra de navegación -->
         <div class="container mt-5">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
             <i class="bi bi-plus-lg"></i>Nuevo
         </button>
@@ -41,8 +53,9 @@
                         <div class="card shadow-sm" style="width: 100%;">
                             <!-- Imagen de la publicación -->
                             @if($prod->imagen)
-                                <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid">
+                                <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid" style="width: 386px; height: 386px; object-fit: cover;">
                             @endif
+
                             <div class="card-body">
                                 <!-- Título y precio del producto -->
                                 <h5 class="card-title">{{ $prod->nombre }} <br> 
@@ -95,5 +108,3 @@
         </script>
     </body>
 </html>
-
-

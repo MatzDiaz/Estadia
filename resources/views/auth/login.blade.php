@@ -40,14 +40,14 @@
                             <span class="text-danger">{{$errors->first('email')}}</span>    
                         @endif
                         <div data-mdb-input-init class="form-outline mb-4">
+                            <label class="form-label" for="form2Example11">Usuario</label>
                             <input type="email" id="email" name="email" class="form-control"
                             placeholder="Correo electrónico" />
-                            <label class="form-label" for="form2Example11">Usuario</label>
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="password" id="password" name="password" class="form-control" />
                             <label class="form-label" for="form2Example22">Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" />
                         </div>
 
                         <div class="text-center pt-1 mb-5 pb-1">

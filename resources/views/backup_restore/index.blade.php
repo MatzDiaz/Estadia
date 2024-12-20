@@ -21,13 +21,13 @@
     @endif
 
     <h2>Generar respaldo</h2>
-    <form action="{{ route('backup_restore.generate') }}" method="POST">
+    <form action="{{ route('backup.generate') }}" method="POST">
         @csrf
         <button type="submit" class="btn btn-primary">Generar respaldo</button>
     </form>
 
     <h2 class="mt-4">Restaurar respaldo</h2>
-    <form action="{{ route('backup_restore.restore') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('backup.restore') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <input type="file" name="backup_file" class="form-control" required>

@@ -29,6 +29,18 @@
                 <br><br>
                 <h3>Lista de categorías</h3>
                 <br>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
                 <i class="bi bi-plus-lg"></i>Nuevo
                 </button>
@@ -86,6 +98,17 @@
                     var myModal = new bootstrap.Modal(document.getElementById('create'));
                     myModal.show();
                 @endif
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const alerts = document.querySelectorAll('.alert');
+                    alerts.forEach(alert => {
+                        alert.classList.add('fade');
+                        setTimeout(() => alert.remove(), 500); // Eliminar del DOM después de la animación
+                    });
+                }, 5000); // Tiempo en milisegundos
             });
         </script>
     </body>
