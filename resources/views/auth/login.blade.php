@@ -36,7 +36,9 @@
                         <form action="{{route('login')}}" method="POST">
                         @csrf
                         <p>Acceda a su cuenta</p>
-
+                        @if($errors)
+                            <span class="text-danger">{{$errors->first('email')}}</span>    
+                        @endif
                         <div data-mdb-input-init class="form-outline mb-4">
                             <input type="email" id="email" name="email" class="form-control"
                             placeholder="Correo electrónico" />

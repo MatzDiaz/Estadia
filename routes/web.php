@@ -80,3 +80,7 @@ Route::post('/graficasPorFecha', [BackupRestoreController::class, 'filtro'])->na
 
 //reporte pdf de ventas
 Route::get('/reporteVentas', [BackupRestoreController::class, 'reporteVentas'])->name('ventas.reporteVentas');
+
+
+//para notificaciones:
+Route::get('/notificaciones', [BackupRestoreController::class, 'notificaciones'])->name('notificaciones.index');

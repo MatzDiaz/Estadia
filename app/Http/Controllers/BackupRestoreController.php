@@ -12,6 +12,7 @@ use App\Models\Entradas;
 use App\Models\Salidas;
 use App\Models\Carrito;
 use App\Models\User;
+use App\Models\notificaciones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -316,6 +317,13 @@ class BackupRestoreController extends Controller
             $pdf = PDF::loadView('ventas.reporte_ventas', compact('ingresos', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'imgSrc', 'proveedores', 'comprasPorCliente'));
             return $pdf->stream('reporte_ventas.pdf');
 
+
+    }
+
+
+    public function notificaciones(){
+        $notificaciones = notificaciones::where('id_usua', auth()->user()->id)->get();
+        return json_decode($notificaciones);
 
     }
 }

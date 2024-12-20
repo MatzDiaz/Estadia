@@ -27,7 +27,7 @@
                         <a class="nav-link {{ request()->is('contacto') ? 'active' : '' }}" href="{{ route('usuarios.usuarios') }}">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('graficas') ? 'active' : '' }}" href="{{ route('usuarios.graficas') }}">Reporte proveedores</a>
+                        <a class="nav-link {{ request()->is('ver') ? 'active' : '' }}" href="{{ route('graficas.ver') }}">Reporte proveedores</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('categorias') ? 'active' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
@@ -51,6 +51,7 @@
 
                 @if (auth()->user() && auth()->user()->rol=='Productor')
                     @include('partials.navProductor')
+                    @include('partials.notify')
                 @endif
 
                 <!-- Enlace para iniciar o cerrar sesión -->
@@ -64,6 +65,7 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('carrito') ? 'active' : '' }}" href="{{ route('carrito.Mostrar') }}"><h4><i class="bi bi-cart4"></i></h4></a>
                     </li>
+                    
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Iniciar sesión</a>

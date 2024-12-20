@@ -12,6 +12,7 @@ return [
     |
     */
 
+    // Validación genérica
     'accepted'             => 'Debe ser aceptado.',
     'active_url'           => 'No es una URL válida.',
     'after'                => 'Debe ser una fecha posterior a :date.',
@@ -115,4 +116,20 @@ return [
     'uploaded'             => 'No se pudo cargar el archivo.',
     'url'                  => 'El formato no es válido.',
     'uuid'                 => 'Debe ser un UUID válido.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mensajes Personalizados: Login y Registro
+    |--------------------------------------------------------------------------
+    */
+    'auth' => [
+        'email' => 'Estas credenciales no coinciden con nuestros registros.',
+        'password' => 'La contraseña proporcionada es incorrecta.',
+        'throttle' => 'Demasiados intentos de acceso. Por favor, inténtelo de nuevo en :seconds segundos.',
+    ],
+
+    'register' => [
+        'email_taken' => 'El correo electrónico ya está registrado.',
+        'invalid_fields' => 'Algunos campos no son válidos, por favor corríjalos.',
+    ],
 ];
