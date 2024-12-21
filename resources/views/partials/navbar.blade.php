@@ -50,8 +50,8 @@
                 @endif
 
                 @if (auth()->user() && auth()->user()->rol=='Productor')
-                    @include('partials.navProductor')
                     @include('partials.notify')
+                    @include('partials.navProductor')
                 @endif
 
                 <!-- Enlace para iniciar o cerrar sesión -->

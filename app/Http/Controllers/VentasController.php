@@ -7,7 +7,8 @@ use App\Models\Categorias;
 use App\Http\Controllers\Controller;
 use App\Models\Ventas;
 use App\Models\Detalle_venta;
-use App\Models\Producto;
+use App\Models\Productos;
+use App\Models\notificaciones;
 use App\Models\Carrito;
 use Illuminate\Support\Facades\DB;
 
@@ -37,6 +38,7 @@ class VentasController extends Controller
         $productos = Carrito::where('id_usuario', auth()->user()->id)->get();
 
         foreach ($productos as $producto) {
+            // Crear el detalle de la venta
             $detalle = new Detalle_venta();
             $detalle->id_venta = $venta->id_venta; 
             $detalle->id_producto = $producto->id_producto; 
@@ -44,6 +46,23 @@ class VentasController extends Controller
             $detalle->precio_unitario = $producto->producto->precio; 
             $detalle->total = $producto->SubTotalPorducto; 
             $detalle->save(); 
+    
+            // Obtener información del producto
+            $productoInfo = Productos::find($producto->id_producto);
+    
+            // Crear una notificación para el productor del producto
+            if ($productoInfo) {
+                $notificacion = new notificaciones();
+                $notificacion->id_usua = $productoInfo->id_productor; // ID del productor
+                $notificacion->mensaje = sprintf(
+                    "Felicidades, tu producto: %s vendió: %d unidades. Total de venta: %.2f",
+                    $productoInfo->nombre,
+                    $producto->cantidad,
+                    $producto->SubTotalPorducto
+                );
+                $notificacion->fecha = now();
+                $notificacion->save();
+            }
         }
 
         Carrito::where('id_usuario', auth()->user()->id)->delete();

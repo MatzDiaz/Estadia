@@ -19,6 +19,16 @@
             @endif
 
         </div>
+        <div class="mb-3">
+            <!-- Nombre del Producto -->
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="text" class="form-control" name="cantidad" id="cantidad" placeholder="Ingrese el stock del producto" value="{{ old('cantidad') }}" >
+            @if ($errors->has('cantidad'))
+                <spam class="text-danger"> {{ $errors->first('cantidad') }} </spam>
+            @endif
+
+        </div>
+
         
         <div class="mb-3">
             <!-- Descripción -->

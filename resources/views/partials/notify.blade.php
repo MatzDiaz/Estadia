@@ -25,6 +25,8 @@
                     li.innerHTML = `<a class="dropdown-item" href="#">${notificacion.mensaje}</a>`;
                     listaNotificaciones.appendChild(li);
                 });
+                
+
 
                 const numero = document.getElementById('numero');
                 numero.innerHTML = `Notificaciones <span class="badge bg-danger">${notificaciones.length}</span>`;
