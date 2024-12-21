@@ -56,7 +56,7 @@
                             @endif
                             <!-- Imagen de la publicación -->
                             @if($prod->imagen)
-                                <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid">
+                                <img src="{{ asset('storage/imagenes/' . $prod->imagen) }}" alt="Imagen del blog" class="img-fluid" style="width: 386px; height: 386px; object-fit: cover;">
                             @endif
                             <div class="card-body">
                                 <!-- Título y precio del producto -->

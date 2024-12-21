@@ -188,6 +188,6 @@ class ProductosController extends Controller
     {
         $producto = Productos::find($id_producto);
         $producto->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Producto eliminado correctamente.');
     }
 }

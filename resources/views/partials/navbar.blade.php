@@ -27,9 +27,6 @@
                         <a class="nav-link {{ request()->is('contacto') ? 'active' : '' }}" href="{{ route('usuarios.usuarios') }}">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('ver') ? 'active' : '' }}" href="{{ route('graficas.ver') }}">Reporte proveedores</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {{ request()->is('categorias') ? 'active' : '' }}" href="{{ route('categorias.index') }}">Categorías</a>
                     </li>
                     <li class="nav-item">

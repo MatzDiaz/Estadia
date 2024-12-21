@@ -3,47 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de todos los usuarios.
+     * 
+     * @return \Illuminate\View\View Retorna la vista con todos los usuarios.
      */
     public function index()
     {
-        //
-        $usuarios =  User::all();
-        return view('usuarios.usuarios',compact('usuarios'));
+        $usuarios = User::all(); // Obtiene todos los registros de usuarios de la base de datos.
+        return view('usuarios.usuarios', compact('usuarios')); // Retorna la vista 'usuarios.usuarios' con los usuarios.
     }
 
+    /**
+     * Muestra una lista de productores.
+     * 
+     * @return \Illuminate\View\View Retorna la vista con los productores.
+     */
     public function indexProductores()
     {
-        $usuarios =  User::all();
-        return view('usuarios.productores', compact('usuarios'));
+        $usuarios = User::all(); // Obtiene todos los registros de usuarios.
+        return view('usuarios.productores', compact('usuarios')); // Retorna la vista 'usuarios.productores' con los usuarios.
     }
-    
+
+    /**
+     * Muestra una lista de usuarios.
+     * 
+     * @return \Illuminate\View\View Retorna la vista con los usuarios.
+     */
     public function indexUsuarios()
     {
-        $usuarios =  User::all();
-        return view('usuarios.usuarios', compact('usuarios'));
+        $usuarios = User::all(); // Obtiene todos los registros de usuarios.
+        return view('usuarios.usuarios', compact('usuarios')); // Retorna la vista 'usuarios.usuarios' con los usuarios.
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo usuario en la base de datos.
+     * 
+     * @param Request $request Datos enviados desde el formulario.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la página anterior con un mensaje de éxito.
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([//Verificar los datos sean los adecuados Entradas
             'nombre' => 'required',
             'apellido' => 'required',
             'email' => 'required',
@@ -53,83 +58,83 @@ class UserController extends Controller
             'sexo' => 'required',
             'rol' => 'required',
         ]);
-        //'password' => Hash::make($data['password'])
-        $usuarios = new User;
-        $usuarios->name = $request->input('nombre');
-        $usuarios->apellido = $request->input('apellido');
-        $usuarios->email = $request->input('email');
-        $usuarios->telefono = $request->input('telefono');
-        $usuarios->direccion = $request->input('direccion');
-        $usuarios->password = bcrypt($request->input('password'));
-        $usuarios->sexo = $request->input('sexo');
-        $usuarios->rol = $request->input('rol');        
-        $usuarios->save();
-        return redirect()->back();
+
+        $usuarios = new User();
+        $usuarios->name = $request->input('nombre'); // Asigna el nombre al modelo.
+        $usuarios->apellido = $request->input('apellido'); // Asigna el apellido.
+        $usuarios->email = $request->input('email'); // Asigna el email.
+        $usuarios->telefono = $request->input('telefono'); // Asigna el teléfono.
+        $usuarios->direccion = $request->input('direccion'); // Asigna la dirección.
+        $usuarios->password = bcrypt($request->input('password')); // Encripta y asigna la contraseña.
+        $usuarios->sexo = $request->input('sexo'); // Asigna el género.
+        $usuarios->rol = $request->input('rol'); // Asigna el rol.
+        $usuarios->save(); // Guarda el modelo en la base de datos.
+
+        return redirect()->back()->with('success', 'Usuario registrado correctamente.');//Salidas
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Actualiza un usuario existente en la base de datos.
+     * 
+     * @param Request $request Datos enviados desde el formulario.
+     * @param int $id ID del usuario a actualizar.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la página anterior con un mensaje de éxito.
      */
     public function update(Request $request, $id)
     {
-        //
-        $request->validate([
+        $request->validate([//Valida las entradas de datos
             'nombre' => 'required',
             'apellido' => 'required',
             'email' => 'required',
             'sexo' => 'required',
         ]);
-        $usuarios = User::find($id);
-        $usuarios->name = $request->input('nombre');
-        $usuarios->apellido = $request->input('apellido');
-        $usuarios->email = $request->input('email');
-        $usuarios->telefono = $request->input('telefono');
-        $usuarios->direccion = $request->input('direccion');
-        $usuarios->sexo = $request->input('sexo');
-        $usuarios->update();
-        return redirect()->back();
+
+        $usuarios = User::find($id); // Busca al usuario por su ID.
+        $usuarios->name = $request->input('nombre'); // Actualiza el nombre.
+        $usuarios->apellido = $request->input('apellido'); // Actualiza el apellido.
+        $usuarios->email = $request->input('email'); // Actualiza el email.
+        $usuarios->telefono = $request->input('telefono'); // Actualiza el teléfono.
+        $usuarios->direccion = $request->input('direccion'); // Actualiza la dirección.
+        $usuarios->sexo = $request->input('sexo'); // Actualiza el género.
+        $usuarios->update(); // Guarda los cambios en la base de datos.
+
+        return redirect()->back()->with('success', 'Usuario actualizado correctamente.');//Salida generada 
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un usuario de la base de datos.
+     * 
+     * @param int $id ID del usuario a eliminar.
+     * @return \Illuminate\Http\RedirectResponse Redirige a la página anterior con un mensaje de éxito.
      */
     public function destroy($id)
     {
-        //
-        $usuarios = User::find($id);
-        $usuarios->delete();
-        return redirect()->back();
+        $usuarios = User::find($id); // Busca al usuario por su ID.
+        $usuarios->delete(); // Elimina al usuario de la base de datos.
+
+        return redirect()->back()->with('success', 'Usuario eliminado correctamente.');//Salida 
     }
 
+    /**
+     * Muestra las gráficas relacionadas con los usuarios y productores.
+     * 
+     * @return \Illuminate\View\View Retorna la vista con datos para las gráficas.
+     */
     public function graficas()
     {
-        // Contar proveedores por género
+        // Contar productores por género
         $proveedoresPorGenero = User::where('rol', 'productor')
             ->selectRaw('sexo, COUNT(*) as total')
             ->groupBy('sexo')
             ->pluck('total', 'sexo');
 
-        // Contar proveedores por dirección
-        $proveedoresPorDireccion = User::where('rol', 'productor')
-            ->selectRaw('direccion, COUNT(*) as total')
-            ->groupBy('direccion')
-            ->pluck('total', 'direccion');
+        // Contar productores por dirección
+        $proveedoresPorDireccion = DB::table('users')
+        ->where('rol', 'productor') 
+        ->select('direccion', DB::raw('COUNT(*) as total')) 
+        ->groupBy('direccion') 
+        ->pluck('total', 'direccion');
+
 
         return view('usuarios.graficas', [
             'proveedoresPorGenero' => $proveedoresPorGenero,

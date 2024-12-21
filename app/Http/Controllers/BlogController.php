@@ -51,7 +51,7 @@ class BlogController extends Controller
         }
 
         $blog->save();
-        return redirect()->back()->with('success', 'Blog creado con éxito.');
+        return redirect()->back()->with('success', 'Publicación creada con éxito.');
     }
 
     /**
@@ -80,7 +80,7 @@ class BlogController extends Controller
         $blog->titulo = $request->input('titulo');
         $blog->descripcion = $request->input('descripcion');
         $blog->update();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Publicación actualizada con éxito.');;
     }
 
     /**
@@ -91,7 +91,7 @@ class BlogController extends Controller
         //
         $blog = Blog::find($id_blog);
         $blog.delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Publicación eliminada con éxito.');;
     }
 
     public function user()
