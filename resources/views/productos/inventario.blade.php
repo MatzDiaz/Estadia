@@ -22,7 +22,6 @@
     @include('partials.navbar')
     <div class="container mt-4">
         <div class="row">
-            
             <!-- Lista de Productos -->
             <div class="col-md-3">
             <h5>Catálogo de Productos</h5>
@@ -35,6 +34,18 @@
             
             <!-- Entradas y Salidas -->
             <div class="col-md-9">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="row">  
                 <!-- Tabla de Entradas -->
                 <div class="col-md-6 table-responsive" style="max-height: 300px; overflow-y: auto;">
