@@ -56,9 +56,19 @@ class SalidasController extends Controller
             'fecha_salida' => now(), // Registrar la fecha actual
         ]);
 
+
+
         // Actualizar la existencia en la tabla de productos
         $producto->cantidad = $nuevaExistencia;
         $producto->save();
+
+        if($producto->cantidad <= 5){
+            $mensaje = "El producto ".$producto->nombre." esta por agotarse, solo quedan ".$producto->cantidad." unidades";
+            $user = User::where('id', '=', $producto->id_productor)->first();
+            
+            Mail::to($user->email)->send(new Correostock($mensaje));
+
+        }
 
         return redirect()->back()->with('success', 'Salida registrada y existencia actualizada correctamente.');
     }

@@ -15,8 +15,7 @@ class Ventas extends Model
         'total',
         'fecha_venta',
         'estado',
-        'direccion_envio',
-        'metodo_pago',
+        'referencia_pago',
     ];
     public $timestamps = false;
 }

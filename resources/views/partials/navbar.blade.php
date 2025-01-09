@@ -20,6 +20,8 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route('home') }}">Inicio</a>
                     </li>
+                    @include('partials.notify')
+
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('usuarios.productores') }}">Productores</a>
                     </li>

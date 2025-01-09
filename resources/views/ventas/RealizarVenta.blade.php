@@ -34,10 +34,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="direccion_envio" class="form-label">Dirección de Envío</label>
-                        <textarea class="form-control" id="direccion_envio" name="direccion_envio" rows="3" required></textarea>
-                    </div>
+                    
 
                     <div class="row">
                         <div class="col-6">

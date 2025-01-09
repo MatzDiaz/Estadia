@@ -26,7 +26,7 @@
 
         <div class="row mt-5">
             <div class="col-md-4">
-                <a href="{{ route('ventas.reporteVentas') }}" class="btn btn-primary w-100">Generar Reporte PDF</a>
+                <a target="_blank" href="{{ route('ventas.reporteVentas') }}" class="btn btn-primary w-100">Generar Reporte PDF</a>
             </div>
             <div class="col-md-4">
                 <button class="btn btn-success w-100">Generar Reporte PDF</button>

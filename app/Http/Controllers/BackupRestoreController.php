@@ -329,7 +329,6 @@ class BackupRestoreController extends Controller
 
 
             
-            return view('backup_restore.panel', compact('ingresos', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'imgSrc', 'proveedores', 'comprasPorCliente'));
             $pdf = PDF::loadView('ventas.reporte_ventas', compact('ingresos', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'imgSrc', 'proveedores', 'comprasPorCliente'));
             return $pdf->stream('reporte_ventas.pdf');
     }

@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Categorias;
 use App\Http\Controllers\Controller;
 use App\Models\Ventas;
+use Carbon\Carbon;
+
 use App\Models\Detalle_venta;
 use App\Models\Productos;
 use App\Models\notificaciones;
 use App\Models\Carrito;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 class VentasController extends Controller
@@ -24,14 +27,29 @@ class VentasController extends Controller
 
     public function realizarVenta(Request $request)
     {
+        $total = Carrito::where('id_usuario', auth()->user()->id)
+            ->sum('SubTotalPorducto');
+        if($total == 0){
+            session()->flash('error', '¡No hay productos en el carrito!');
+            return redirect()->route('carrito.Mostrar')->with('error', 'No hay productos en el carrito');
+        }
+        
         $venta = new Ventas();
         $venta->id_cliente = auth()->user()->id;
-        $total = Carrito::where('id_usuario', auth()->user()->id)
-            ->sum('SubTotalPorducto'); 
+
         $venta->total = $total;
+
+        
         $venta->fecha_venta = now()->toDateString(); 
-        $venta->direccion_envio = $request->direccion_envio; 
-        $venta->metodo_pago = $request->metodo_pago; 
+
+        $fechaActual = Carbon::now()->format('Ymd'); 
+        $idUsuario = auth()->user()->id;
+
+        $ultimaVenta = Ventas::latest('id_venta')
+            ->select('id_venta')
+        ->first();
+        $cadena = $fechaActual . $idUsuario . $ultimaVenta->id_venta;
+        $venta->referencia_pago = $cadena; 
         $venta->estado = "Finalizado"; 
         $venta->save(); 
 
@@ -66,8 +84,11 @@ class VentasController extends Controller
         }
 
         Carrito::where('id_usuario', auth()->user()->id)->delete();
-        session()->flash('success', '¡Compra realizada con éxito!');
-        return redirect()->route('home');
+
+        $pdf = PDF::loadView('ventas.tikec_venta', compact('venta', 'productos'));
+        return $pdf->download('ticket_venta.pdf');
+        return response()->json(['success' => true, 'message' => 'Venta realizada correctamente']);
+
     }
 
 }
