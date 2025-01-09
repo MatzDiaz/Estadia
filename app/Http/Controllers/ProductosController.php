@@ -69,7 +69,6 @@ class ProductosController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric|min:0',
-            'cantidad' => 'required|numeric|min:0',
             'id_categoria' => 'required|exists:categorias,id_categoria',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
@@ -98,7 +97,6 @@ class ProductosController extends Controller
         $producto->nombre = $request->input('nombre');
         $producto->descripcion = $request->input('descripcion');
         $producto->precio = $request->input('precio');
-        $producto->cantidad = $request->input('cantidad');
         $producto->id_cateogria = $request->input('id_categoria');
         $producto->id_productor = auth()->user()->id;
     
@@ -141,7 +139,6 @@ class ProductosController extends Controller
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric|min:0',
-            'cantidad' => 'required|numeric|min:0',
             'id_categoria' => 'required|exists:categorias,id_categoria',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -158,7 +155,6 @@ class ProductosController extends Controller
         $producto->descripcion = $request->input('descripcion');
         $producto->precio = $request->input('precio');
         $producto->id_cateogria = $request->input('id_categoria');
-        $producto->cantidad = $request->input('cantidad');
 
         // Si hay una nueva imagen, procesarla
         if ($request->hasFile('imagen')) {

@@ -15,13 +15,7 @@
           crossorigin="anonymous" />
 
     <!-- Custom Styles -->
-    <style>
-        .table img {
-            width: 100px; /* Ancho uniforme */
-            height: 100px; /* Altura uniforme */
-            object-fit: cover; /* Ajustar el contenido sin deformarlo */
-        }
-    </style>
+
 </head>
 
 <body>
@@ -80,7 +74,7 @@
                     </thead>
                     <tbody>
                         @foreach($usuarios as $usuario)
-                            @if($usuario->rol != 'Consumidor')
+                            @if($usuario->rol == 'Productor')
                                 <tr>
                                     <td>{{ $usuario->id }}</td>
                                     <td>{{ $usuario->name }}</td>
@@ -90,10 +84,10 @@
                                     <td>{{ $usuario->direccion }}</td>
                                     <td>{{ $usuario->sexo }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit{{ $usuario->id }}">
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit{{$usuario->id }}">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{ $usuario->id }}">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{$usuario->id}}">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>

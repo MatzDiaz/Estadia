@@ -49,8 +49,8 @@
                 @endif
 
                 @if (auth()->user() && auth()->user()->rol=='Productor')
-                    @include('partials.notify')
                     @include('partials.navProductor')
+                    @include('partials.notify')
                 @endif
 
                 <!-- Enlace para iniciar o cerrar sesión -->

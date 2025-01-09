@@ -123,8 +123,7 @@
             </table>
         </div>
     <!---->
-<!-- Botón de Acción -->
-<h2 class="mt-5">Reporte de Proveedores y Compras</h2>
+    <h2 class="mt-5">Reporte de Proveedores y Compras</h2>
         <!-- Proveedores Más Vendidos -->
                 <!-- Gráficas -->
         <div class="row">
@@ -187,6 +186,65 @@
         </div>
     </div>
     </div>
+    <script>
+    // Datos para la gráfica de Dirección
+    const proveedoresPorDireccion = @json($proveedoresPorDireccion);
+
+    // Calcular el total de proveedores para obtener los porcentajes
+    const totalProveedores = Object.values(proveedoresPorDireccion).reduce((a, b) => a + b, 0);
+    const porcentajesDireccion = Object.values(proveedoresPorDireccion).map(value => ((value / totalProveedores) * 100).toFixed(2));
+
+    // Datos de la gráfica de Dirección
+    const dataDireccion = {
+        labels: Object.keys(proveedoresPorDireccion), // Direcciones
+        datasets: [{
+            label: 'Proveedores por Dirección', // Título de la gráfica
+            data: Object.values(proveedoresPorDireccion), // Total de proveedores por dirección
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)', 
+                'rgba(54, 162, 235, 0.2)', 
+                'rgba(255, 206, 86, 0.2)', 
+                'rgba(75, 192, 192, 0.2)', 
+                'rgba(153, 102, 255, 0.2)', 
+                'rgba(255, 159, 64, 0.2)'
+            ], // Colores de las secciones
+            borderColor: [
+                'rgba(255, 99, 132, 1)', 
+                'rgba(54, 162, 235, 1)', 
+                'rgba(255, 206, 86, 1)', 
+                'rgba(75, 192, 192, 1)', 
+                'rgba(153, 102, 255, 1)', 
+                'rgba(255, 159, 64, 1)'
+            ], // Bordes de las secciones
+            borderWidth: 1 // Ancho del borde
+        }]
+    };
+
+    // Configuración y renderización de la gráfica de Dirección
+    new Chart(document.getElementById('graficaDireccion'), {
+        type: 'pie', // Tipo de gráfica (pastel)
+        data: dataDireccion, // Datos que alimentan la gráfica
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Mantener el aspecto de la gráfica
+            plugins: {
+                legend: {
+                    position: 'top', // Posición de la leyenda
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const label = dataDireccion.labels[tooltipItem.dataIndex]; // Dirección
+                            const value = dataDireccion.datasets[0].data[tooltipItem.dataIndex]; // Total de proveedores
+                            const percentage = porcentajesDireccion[tooltipItem.dataIndex]; // Porcentaje
+                            return `${label}: ${value} proveedores (${percentage}%)`; // Etiqueta con valor y porcentaje
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
     <script>
         
         const generoData = {!! json_encode($datagenero) !!};
@@ -305,65 +363,7 @@
         });
     </script>
 
-<script>
-    // Datos para la gráfica de Dirección
-    const proveedoresPorDireccion = @json($proveedoresPorDireccion);
 
-    // Calcular el total de proveedores para obtener los porcentajes
-    const totalProveedores = Object.values(proveedoresPorDireccion).reduce((a, b) => a + b, 0);
-    const porcentajesDireccion = Object.values(proveedoresPorDireccion).map(value => ((value / totalProveedores) * 100).toFixed(2));
-
-    // Datos de la gráfica de Dirección
-    const dataDireccion = {
-        labels: Object.keys(proveedoresPorDireccion), // Direcciones
-        datasets: [{
-            label: 'Proveedores por Dirección', // Título de la gráfica
-            data: Object.values(proveedoresPorDireccion), // Total de proveedores por dirección
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)', 
-                'rgba(54, 162, 235, 0.2)', 
-                'rgba(255, 206, 86, 0.2)', 
-                'rgba(75, 192, 192, 0.2)', 
-                'rgba(153, 102, 255, 0.2)', 
-                'rgba(255, 159, 64, 0.2)'
-            ], // Colores de las secciones
-            borderColor: [
-                'rgba(255, 99, 132, 1)', 
-                'rgba(54, 162, 235, 1)', 
-                'rgba(255, 206, 86, 1)', 
-                'rgba(75, 192, 192, 1)', 
-                'rgba(153, 102, 255, 1)', 
-                'rgba(255, 159, 64, 1)'
-            ], // Bordes de las secciones
-            borderWidth: 1 // Ancho del borde
-        }]
-    };
-
-    // Configuración y renderización de la gráfica de Dirección
-    new Chart(document.getElementById('graficaDireccion'), {
-        type: 'pie', // Tipo de gráfica (pastel)
-        data: dataDireccion, // Datos que alimentan la gráfica
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Mantener el aspecto de la gráfica
-            plugins: {
-                legend: {
-                    position: 'top', // Posición de la leyenda
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            const label = dataDireccion.labels[tooltipItem.dataIndex]; // Dirección
-                            const value = dataDireccion.datasets[0].data[tooltipItem.dataIndex]; // Total de proveedores
-                            const percentage = porcentajesDireccion[tooltipItem.dataIndex]; // Porcentaje
-                            return `${label}: ${value} proveedores (${percentage}%)`; // Etiqueta con valor y porcentaje
-                        }
-                    }
-                }
-            }
-        }
-    });
-</script>
 
 
     <script>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\entradas;
+use App\Models\Entradas;
 use App\Models\Productos;
-use App\Models\salidas;
+use App\Models\Salidas;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,12 +15,21 @@ class EntradasController extends Controller
      */
     public function index()
     {
-        //
-        $entradas = Entradas::with('producto')->get();
-        $producto = Productos::all();
-        $salidas = Salidas::with('producto')->get();
-        return view('productos.inventario', compact('entradas','producto','salidas'));
+        // Obtener productos del productor autenticado
+        $producto = Productos::where('id_productor', auth()->id())->get();
+        
+        // Obtener salidas de los productos de ese productor
+        $salidas = Salidas::with('producto')
+            ->whereIn('id_producto', $producto->pluck('id_producto'))  // Filtrar salidas por los productos del productor
+            ->get();
+
+        $entradas = Entradas::with('producto')
+            ->whereIn('id_producto', $producto->pluck('id_producto'))  // Filtrar entradas por los productos del productor
+            ->get();
+        
+        return view('productos.inventario', compact('entradas', 'producto', 'salidas'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -41,38 +50,47 @@ class EntradasController extends Controller
             'tipo' => 'required|string|max:255',
         ]);
     
-        // Obtener la última entrada del producto para calcular la existencia acumulada
-        $ultimaEntrada = Entradas::where('id_producto', $request->id_producto)
-                                 ->orderBy('id_entrada', 'desc')
-                                 ->first();
-    
-        // Calcular la nueva existencia
-        $nuevaExistencia = $ultimaEntrada ? $ultimaEntrada->existencia + $request->cantidad : $request->cantidad;
-    
-        // Crear un nuevo registro de entrada con la nueva cantidad y existencia acumulada
+        // Obtener el producto
+        $producto = Productos::find($request->id_producto);
+        
+        // Verificar si el producto ya tiene existencias
+        if ($producto) {
+            // Si el producto ya tiene existencia, se le sumará la cantidad ingresada
+            $nuevaCantidad = $producto->cantidad + $request->cantidad;
+        } else {
+            // Si el producto no existe, se creará con la cantidad ingresada
+            $nuevaCantidad = $request->cantidad;
+        }
+
+        // Registrar la entrada en la tabla de entradas
         Entradas::create([
             'id_producto' => $request->id_producto,
             'cantidad' => $request->cantidad,
-            'existencia' => $nuevaExistencia, // Actualizar la existencia acumulada
+            'existencia' => $nuevaCantidad, // La nueva cantidad acumulada
             'tipo_entrada' => $request->tipo, // Registrar el tipo de entrada
         ]);
     
         // Actualizar la cantidad en la tabla de productos
-        $producto = Productos::find($request->id_producto);
         if ($producto) {
-            $producto->cantidad = $nuevaExistencia; // Actualizar la existencia
+            $producto->cantidad = $nuevaCantidad; // Actualizar la cantidad en el producto
             $producto->save();
+        } else {
+            // Si el producto no existe, se crea un nuevo registro
+            Productos::create([
+                'id_producto' => $request->id_producto,
+                'cantidad' => $nuevaCantidad,
+                'nombre' => $request->nombre, // Asegúrate de incluir el nombre u otros campos necesarios
+                // Otros campos del producto que puedan ser necesarios
+            ]);
         }
     
         return redirect()->back()->with('success', 'Entrada registrada y existencia actualizada correctamente.');
     }
-    
-    
 
     /**
      * Display the specified resource.
      */
-    public function show(entradas $entradas)
+    public function show(Entradas $entradas)
     {
         //
     }
@@ -80,7 +98,7 @@ class EntradasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(entradas $entradas)
+    public function edit(Entradas $entradas)
     {
         //
     }
@@ -88,7 +106,7 @@ class EntradasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, entradas $entradas)
+    public function update(Request $request, Entradas $entradas)
     {
         //
     }
@@ -96,7 +114,7 @@ class EntradasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(entradas $entradas)
+    public function destroy(Entradas $entradas)
     {
         //
     }

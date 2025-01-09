@@ -165,29 +165,29 @@ class BackupRestoreController extends Controller
 
 
         $proveedores = DB::table('detalles_venta')
-            ->join('producto', 'detalles_venta.id_producto', '=', 'producto.id_producto')
-            ->join('users', 'producto.id_productor', '=', 'users.id')
-            ->select('users.id as productor_id', 'users.name as productor_nombre', DB::raw('SUM(detalles_venta.cantidad) as total_vendido'))
-            ->groupBy('users.id', 'users.name')  
-            ->orderByDesc(DB::raw('SUM(detalles_venta.cantidad)'))  
-            ->get();
+        ->join('producto', 'detalles_venta.id_producto', '=', 'producto.id_producto')
+        ->join('users', 'producto.id_productor', '=', 'users.id')
+        ->select('users.id as productor_id', 'users.name as productor_nombre', DB::raw('SUM(detalles_venta.cantidad) as total_vendido'))
+        ->groupBy('users.id', 'users.name')  
+        ->orderByDesc(DB::raw('SUM(detalles_venta.cantidad)'))  
+        ->get();
 
-            $comprasPorCliente = DB::table('ventas')
-            ->join('users', 'ventas.id_cliente', '=', 'users.id')
-            ->select('users.id', 'users.name', DB::raw('COUNT(ventas.id_venta) as numeroCompras'))
-            ->groupBy('users.id', 'users.name')
-            ->orderByDesc(DB::raw('COUNT(ventas.id_venta)'))
-            ->limit(5)
-            ->get();
-            
-             // Contar productores por dirección
-            $proveedoresPorDireccion = DB::table('users')
-            ->where('rol', 'productor') 
-            ->select('direccion', DB::raw('COUNT(*) as total')) 
-            ->groupBy('direccion') 
-            ->pluck('total', 'direccion');
+        $comprasPorCliente = DB::table('ventas')
+        ->join('users', 'ventas.id_cliente', '=', 'users.id')
+        ->select('users.id', 'users.name', DB::raw('COUNT(ventas.id_venta) as numeroCompras'))
+        ->groupBy('users.id', 'users.name')
+        ->orderByDesc(DB::raw('COUNT(ventas.id_venta)'))
+        ->limit(5)
+        ->get();
+        
+         // Contar productores por dirección
+        $proveedoresPorDireccion = DB::table('users')
+        ->where('rol', 'productor') 
+        ->select('direccion', DB::raw('COUNT(*) as total')) 
+        ->groupBy('direccion') 
+        ->pluck('total', 'direccion');
 
-        return view('backup_restore.panel', compact('labels', 'data', 'ventasPorMes','fechaInicio', 'fechaFin', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'labels', 'data', 'ingresos', 'porcentajegenero', 'datagenero', 'comprasPorCliente', 'proveedores','proveedoresPorDireccion'));
+        return view('backup_restore.panel', compact('labels', 'data', 'ventasPorMes','fechaInicio', 'fechaFin', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'labels', 'data', 'ingresos', 'porcentajegenero', 'datagenero', 'proveedoresPorDireccion','comprasPorCliente','proveedores'));
     }
 
 
@@ -329,6 +329,7 @@ class BackupRestoreController extends Controller
 
 
             
+            return view('backup_restore.panel', compact('ingresos', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'imgSrc', 'proveedores', 'comprasPorCliente'));
             $pdf = PDF::loadView('ventas.reporte_ventas', compact('ingresos', 'totalIngresos', 'cantidadTickets', 'ticketPromedio', 'productosMasVendidos', 'productosLabels', 'productosData', 'imgSrc', 'proveedores', 'comprasPorCliente'));
             return $pdf->stream('reporte_ventas.pdf');
     }
@@ -337,6 +338,5 @@ class BackupRestoreController extends Controller
     public function notificaciones(){
         $notificaciones = notificaciones::where('id_usua', auth()->user()->id)->get();
         return json_decode($notificaciones);
-
     }
 }

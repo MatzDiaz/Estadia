@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -42,8 +45,7 @@
                         <div class="card-body">
                             <!-- Título y nombre del usuario -->
                             <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">{{$bg->titulo}} - <small class="text-muted">{{ $bg->user->name }}</small></h5>
-                                
+                                <h5 class="card-title mb-0">{{$bg->titulo}} - <small class="text-muted">{{$bg->user->name}}</small></h5>
                                 <!-- Menú de opciones de tres puntos -->
                                 <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton{{$bg->id_blog}}" data-bs-toggle="dropdown" aria-expanded="false">
@@ -52,19 +54,19 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton{{$bg->id_blog}}">
                                         <li>
                                             <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit{{$bg->id_blog}}">
-                                                Editar
+                                                <i class="bi bi-pencil-square"></i> Editar
                                             </button>
                                         </li>
                                         <li>
                                             <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete{{$bg->id_blog}}">
-                                                Eliminar
+                                                <i class="bi bi-trash"></i> Eliminar
                                             </button>
                                         </li>
-                                        @include('blog.modBlog')
                                     </ul>
                                 </div>
-                            </div>
                             
+                            </div>
+                            @include('blog.modBlog')
                             <p class="card-text">
                                 {{$bg->descripcion}}
                             </p>
@@ -84,6 +86,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Mostrar el modal si hay errores

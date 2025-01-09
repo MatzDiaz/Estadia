@@ -90,7 +90,7 @@ class BlogController extends Controller
     {
         //
         $blog = Blog::find($id_blog);
-        $blog.delete();
+        $blog->delete();
         return redirect()->back()->with('success', 'Publicación eliminada con éxito.');;
     }
 

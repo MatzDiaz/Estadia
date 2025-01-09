@@ -24,4 +24,9 @@ class Productos extends Model
     {
         return $this->hasMany(Carrito::class, 'id_producto', 'id_producto');
     }
+    // En el modelo Producto
+    public function productor()
+    {
+        return $this->belongsTo(User::class, 'id_productor');
+    }
 }
