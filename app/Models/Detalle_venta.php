@@ -18,4 +18,9 @@ class Detalle_venta extends Model
         'total'
     ];
     public $timestamps = false;
+
+    public function producto()
+    {
+        return $this->belongsTo(Productos::class, 'id_producto');
+    }
 }

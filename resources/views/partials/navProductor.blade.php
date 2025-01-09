@@ -11,5 +11,5 @@
                         <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('productos.index') }}">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('ventasProductor') ? 'active' : '' }}" href="{{ route('ventas.indexp') }}">Ventas</a>
+                        <a class="nav-link {{ request()->is('ventasProductor') ? 'active' : '' }}" href="{{ route('ventasProductor.index') }}">Ventas</a>
                     </li>

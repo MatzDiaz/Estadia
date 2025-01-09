@@ -13,6 +13,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\BackupRestoreController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\VentasController;
+use App\Http\Controllers\DetallesVentaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,3 +86,6 @@ Route::get('/reporteVentas', [BackupRestoreController::class, 'reporteVentas'])-
 
 //para notificaciones:
 Route::get('/notificaciones', [BackupRestoreController::class, 'notificaciones'])->name('notificaciones.index');
+
+//ruta ventas
+Route::resource('ventasProductor', DetallesVentaController::class);
